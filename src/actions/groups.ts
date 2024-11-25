@@ -105,6 +105,8 @@ export const onCreateNewGroup = async (
             }
         }
     } catch (error) {
+        console.log(error, "group created")
+
         return {
             status: 400,
             message: "Oops! group creation failed, try again later",

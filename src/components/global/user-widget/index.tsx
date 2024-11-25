@@ -4,7 +4,7 @@ import { Notification } from "./notification"
 import { UserAvatar } from "./user"
 
 type UserWidgetProps = {
-    image: string
+    image: any
     groupid?: string
     userid?: string
 }

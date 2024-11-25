@@ -27,11 +27,8 @@ const CreateGroupLayout = ({ children }: Props) => {
                     </p>
                     <div className="flex flex-col gap-3 mt-16 pl-5">
                         {NEXGEN_CONSTANTS.createGroupPlaceholder.map(
-                            (placeholder) => (
-                                <div
-                                    className="flex gap-3"
-                                    key={placeholder.id}
-                                >
+                            (placeholder, index) => (
+                                <div className="flex gap-3" key={index}>
                                     {placeholder.icon}
                                     <p className="text-themeTextGray">
                                         {placeholder.label}

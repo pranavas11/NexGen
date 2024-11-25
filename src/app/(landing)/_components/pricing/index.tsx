@@ -1,9 +1,6 @@
 import BackdropGradient from "@/components/global/backdrop-gradient"
 import GradientText from "@/components/global/gradient-text"
-import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardTitle } from "@/components/ui/card"
-import { Check } from "@/icons"
-import Link from "next/link"
+import { PriceCard } from "../priceCard"
 
 type Props = {}
 
@@ -26,7 +23,7 @@ export const PricingSection = (props: Props) => {
                     collaborate, and cultivate meaningful relationships
                 </p>
             </BackdropGradient>
-            <Card className="p-7 mt-10 md:w-auto w-full bg-themeBlack border-themeGray">
+            {/* <Card className="p-7 mt-10 md:w-auto w-full bg-themeBlack border-themeGray">
                 <div className="flex flex-col gap-2">
                     <CardTitle>99/m</CardTitle>
                     <CardDescription className="text-[#B4B0AE]">
@@ -64,7 +61,10 @@ export const PricingSection = (props: Props) => {
                         Feature number 5
                     </span>
                 </div>
-            </Card>
+            </Card> */}
+            <div>
+                <PriceCard />
+            </div>
         </div>
     )
 }

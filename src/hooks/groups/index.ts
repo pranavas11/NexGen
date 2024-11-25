@@ -80,56 +80,56 @@ export const useSearch = (search: "GROUPS" | "POSTS") => {
 
     const dispatch: AppDispatch = useDispatch()
 
-    const onSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) =>
+    const onSearchQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value)
+    }
 
     useEffect(() => {
         const delayInputTimeoutId = setTimeout(() => {
             setDebounce(query)
         }, 1000)
         return () => clearTimeout(delayInputTimeoutId)
-    }, [query, 1000])
+    }, [query]) // the debounce effect should be dependent on the query not constant
 
     const { refetch, data, isFetched, isFetching } = useQuery({
         queryKey: ["search-data", debounce],
         queryFn: async ({ queryKey }) => {
             if (search === "GROUPS") {
-                const groups = await onSearchGroups(search, queryKey[1])
-                return groups
+                return await onSearchGroups(search, queryKey[1])
             }
         },
-        enabled: false,
+        enabled: false, // Disable by default
     })
 
-    if (isFetching)
-        dispatch(
-            onSearch({
-                isSearching: true,
-                data: [],
-            }),
-        )
-
-    if (isFetched)
-        dispatch(
-            onSearch({
-                isSearching: false,
-                status: data?.status as number,
-                data: data?.groups || [],
-                debounce,
-            }),
-        )
-
+    // Handle state changes based on fetching status
     useEffect(() => {
-        if (debounce) refetch()
-        if (!debounce) dispatch(onClearSearch())
-        return () => {
-            debounce
+        if (isFetching) {
+            dispatch(onSearch({ isSearching: true, data: [] }))
         }
-    }, [debounce])
 
-    return { query, onSearchQuery }
+        if (isFetched) {
+            dispatch(
+                onSearch({
+                    isSearching: false,
+                    status: data?.status as number,
+                    data: data?.groups || [],
+                    debounce,
+                }),
+            )
+        }
+    }, [isFetching, isFetched, data, dispatch, debounce]) // Added relevant dependencies
+
+    // Refetch when debounce changes
+    useEffect(() => {
+        if (debounce) {
+            refetch()
+        } else {
+            dispatch(onClearSearch())
+        }
+    }, [debounce, refetch, dispatch])
+
+    return { query, onSearchQuery, isFetching, isFetched } // Return states for use in the component
 }
-
 export const useGroupSettings = (groupid: string) => {
     const { data } = useQuery({
         queryKey: ["group-info"],

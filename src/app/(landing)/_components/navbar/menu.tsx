@@ -5,6 +5,7 @@ import { NEXGEN_CONSTANTS } from "@/constants"
 import { useNavigation } from "@/hooks/navigation"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import React from "react"
 
 type MenuProps = {
     orientation: "mobile" | "desktop"
@@ -17,24 +18,30 @@ const Menu = ({ orientation }: MenuProps) => {
             return (
                 <Card className="bg-themeGray border-themeGray bg-clip-padding backdrop--blur__safari backdrop-filter backdrop-blur-2xl bg-opacity-60 p-1 lg:flex hidden rounded-xl">
                     <CardContent className="p-0 flex gap-2">
-                        {NEXGEN_CONSTANTS.landingPageMenu.map((menuItem) => (
-                            <Link
-                                href={menuItem.path}
-                                {...(menuItem.section && {
-                                    onClick: () => onSetSection(menuItem.path),
-                                })}
-                                className={cn(
-                                    "rounded-xl flex gap-2 py-2 px-4 items-center",
-                                    section == menuItem.path
-                                        ? "bg-[#09090B] border-[#27272A]"
-                                        : "",
-                                )}
-                                key={menuItem.id}
-                            >
-                                {section == menuItem.path && menuItem.icon}
-                                {menuItem.label}
-                            </Link>
-                        ))}
+                        {NEXGEN_CONSTANTS.landingPageMenu.map(
+                            (menuItem, index) => (
+                                <Link
+                                    href={menuItem.path}
+                                    {...(menuItem.section && {
+                                        onClick: () =>
+                                            onSetSection(menuItem.path),
+                                    })}
+                                    className={cn(
+                                        "rounded-xl flex gap-2 py-2 px-4 items-center",
+                                        section == menuItem.path
+                                            ? "bg-[#09090B] border-[#27272A]"
+                                            : "",
+                                    )}
+                                    key={`${menuItem.id}-${index}`}
+                                >
+                                    <React.Fragment key={`${menuItem.id}-icon`}>
+                                        {section == menuItem.path &&
+                                            menuItem.icon}
+                                    </React.Fragment>
+                                    {menuItem.label}
+                                </Link>
+                            ),
+                        )}
                     </CardContent>
                 </Card>
             )
@@ -42,7 +49,7 @@ const Menu = ({ orientation }: MenuProps) => {
         case "mobile":
             return (
                 <div className="flex flex-col mt-10">
-                    {NEXGEN_CONSTANTS.landingPageMenu.map((menuItem) => (
+                    {NEXGEN_CONSTANTS.landingPageMenu.map((menuItem, index) => (
                         <Link
                             href={menuItem.path}
                             {...(menuItem.section && {
@@ -54,9 +61,13 @@ const Menu = ({ orientation }: MenuProps) => {
                                     ? "bg-themeGray border-[#27272A]"
                                     : "",
                             )}
-                            key={menuItem.id}
+                            key={`${menuItem.id}-${index}`}
                         >
-                            {menuItem.icon}
+                            {menuItem.icon && (
+                                <React.Fragment key={`${menuItem.id}-icon`}>
+                                    {menuItem.icon}
+                                </React.Fragment>
+                            )}
                             {menuItem.label}
                         </Link>
                     ))}

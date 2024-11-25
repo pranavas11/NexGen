@@ -13,8 +13,8 @@ import {
     dehydrate,
 } from "@tanstack/react-query"
 import { redirect } from "next/navigation"
-import { Navbar } from "../_components/navbar"
 import MobileNav from "../_components/mobile-nav"
+import { Navbar } from "../_components/navbar"
 
 type Props = {
     children: React.ReactNode
@@ -25,6 +25,7 @@ type Props = {
 
 const GroupLayout = async ({ children, params }: Props) => {
     const query = new QueryClient()
+    console.log(params.groupid, "groupid")
 
     const user = await onAuthenticatedUser()
     if (!user.id) redirect("/sign-in")

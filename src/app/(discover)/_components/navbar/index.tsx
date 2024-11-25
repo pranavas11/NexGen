@@ -1,6 +1,5 @@
 import { onAuthenticatedUser } from "@/actions/auth"
 import { onGetUserGroups } from "@/actions/groups"
-
 import GlassSheet from "@/components/global/glass-sheet"
 import { UserWidget } from "@/components/global/user-widget"
 import { Button } from "@/components/ui/button"
@@ -9,7 +8,11 @@ import { MenuIcon } from "lucide-react"
 import Link from "next/link"
 import { GroupDropDown } from "./group-dropdown"
 
-export const Navbar = async () => {
+type Props = {
+    groupid: string
+}
+
+export const Navbar = async ({ groupid }: Props) => {
     const user = await onAuthenticatedUser()
     const groups = await onGetUserGroups(user.id!)
 
@@ -43,7 +46,7 @@ export const Navbar = async () => {
                     </Button>
                 </Link>
                 {user.status === 200 ? (
-                    <UserWidget image={user.image!} />
+                    <UserWidget image={user.image!} groupid={groupid} />
                 ) : (
                     <Link href="/sign-in">
                         <Button

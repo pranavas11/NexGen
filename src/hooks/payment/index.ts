@@ -88,12 +88,16 @@ export const usePayments = (
             )
 
             if (error) {
+                console.log(error, "Stipe error")
                 return toast("Error", {
-                    description: "Oops! something went wrong, try again later",
+                    description:
+                        "Oops! something went wrong with your payment, try again later",
                 })
             }
 
             if (paymentIntent?.status === "succeeded") {
+                console.log(paymentIntent.status, "intent")
+
                 if (affiliate) {
                     await onTransferCommission(stripeId!)
                 }
@@ -182,7 +186,8 @@ export const useJoinGroup = (groupid: string) => {
             if (error) {
                 console.log(error)
                 return toast("Error", {
-                    description: "Oops! something went wrong, try again later",
+                    description:
+                        "Oops! something went wrong, try again later Mutation",
                 })
             }
 

@@ -50,7 +50,11 @@ const SignUpForm = (props: Props) => {
             )}
 
             {verifying ? (
-                <Button type="submit" className="rounded-2xl">
+                <Button
+                    type="submit"
+                    className="rounded-2xl"
+                    onClick={() => console.log("am clicked")}
+                >
                     <Loader loading={creating}>Sign Up with Email</Loader>
                 </Button>
             ) : (

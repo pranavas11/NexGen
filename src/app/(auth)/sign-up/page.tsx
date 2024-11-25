@@ -20,6 +20,15 @@ const SignUpPage = (props: Props) => {
                 <Separator orientation="horizontal" className="bg-themeGray" />
             </div>
             <GoogleAuthButton method="signup" />
+            <p className="text-themeTextWhite text-center mt-2 font-bold text-sm">
+                Already registered?
+                <a
+                    href="/sign-in"
+                    className="text-blue-600 hover:underline font-semibold px-1"
+                >
+                    <span className="text-blue-500">Login here!</span>
+                </a>
+            </p>
         </>
     )
 }
